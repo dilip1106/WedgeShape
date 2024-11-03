@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // for generating tables in pdf
-
+import { useAuthStore } from '../store/authStore';
+import Swal from 'sweetalert2'; 
 const Observation = ({
   toggleLight,
   handlePaperSelect,
@@ -24,6 +25,9 @@ const Observation = ({
   const [mean5Beta, setMean5Beta] = useState(null);
   const [meanBeta, setMeanBeta] = useState(null);
   const [calculatedThickness, setCalculatedThickness] = useState(null);
+
+
+  const { logout } = useAuthStore();
 
   const calculateBeta = () => {
     const newTrValues = [];
@@ -74,29 +78,46 @@ const Observation = ({
 
   // Function to download observation data as PDF
   const downloadDataAsPDF = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(12);
-    doc.text('Observation Data', 14, 10);
-    
-    // Add Table
-    const tableColumn = ["Fringe No.", "MSR", "VSD", "TR", "β"];
-    const tableRows = msrValues.map((_, index) => [
-      index === 0 ? 'n' : index === 1 ? 'n+5' : index === 2 ? 'n+10' : 'n+15',
-      msrValues[index],
-      vsdValues[index],
-      trValues[index],
-      betaValues[index],
-    ]);
+    Swal.fire({
+      title: "Confirm Download",
+      text: "You will be logged out after downloading the file. Do you want to continue?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, download it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Create PDF
+        const doc = new jsPDF();
+        doc.setFontSize(12);
+        doc.text('Observation Data', 14, 10);
 
-    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+        // Add Table
+        const tableColumn = ["Fringe No.", "MSR", "VSD", "TR", "β"];
+        const tableRows = msrValues.map((_, index) => [
+          index === 0 ? 'n' : index === 1 ? 'n+5' : index === 2 ? 'n+10' : 'n+15',
+          msrValues[index],
+          vsdValues[index],
+          trValues[index],
+          betaValues[index],
+        ]);
 
-    // Add Calculations
-    doc.text(`Least Count: ${leastCount || 'N/A'}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.text(`Mean5Beta: ${mean5Beta !== null ? mean5Beta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 15);
-    doc.text(`MeanBeta: ${meanBeta !== null ? meanBeta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 20);
-    doc.text(`Calculated Thickness: ${calculatedThickness !== null ? calculatedThickness + ' cm' : 'N/A'}`, 14, doc.lastAutoTable.finalY + 25);
+        doc.autoTable(tableColumn, tableRows, { startY: 20 });
 
-    doc.save('observation_data.pdf'); // Change the file name as needed
+        // Add Calculations
+        doc.text(`Least Count: ${leastCount || 'N/A'}`, 14, doc.lastAutoTable.finalY + 10);
+        doc.text(`Mean5Beta: ${mean5Beta !== null ? mean5Beta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 15);
+        doc.text(`MeanBeta: ${meanBeta !== null ? meanBeta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 20);
+        doc.text(`Calculated Thickness: ${calculatedThickness !== null ? calculatedThickness + ' cm' : 'N/A'}`, 14, doc.lastAutoTable.finalY + 25);
+
+        // Save the PDF
+        doc.save('observation_data.pdf');
+
+        // Call logout function after download
+        logout(); // Call the logout function
+      }
+    });
   };
 
   return (
