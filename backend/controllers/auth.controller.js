@@ -17,7 +17,7 @@ export const signup = async (req, res) => {
     if (role === "student") {
       const studentEmailRegex = /^[\w-.]*\d{5}@sakec\.ac\.in$/;
       if (!studentEmailRegex.test(email)) {
-        return res.status(400).json({ success: false, message: "Invalid Student Mail" });
+        return res.status(400).json({ success: false, message: "Invalid Sakec-Student Mail" });
       }
     } else if (role === "teacher") {
       const teacherEmailRegex = /^[^\d@]+@sakec\.ac\.in$/;
@@ -199,7 +199,7 @@ export const forgotPassword = async (req,res) => {
 		await user.save();
 
 		// send email
-		await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+		await sendPasswordResetEmail(user.email, `https://wedgeshape.onrender.com/reset-password/${resetToken}`);
 
 		res.status(200).json({ success: true, message: "Password reset link sent to your email" });
 	} catch (error) {

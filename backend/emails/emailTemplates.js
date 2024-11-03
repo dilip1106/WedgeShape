@@ -9,7 +9,6 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #333; padding: 20px; display: flex; gap:220px; justify-content: space-between;">
     <h1 style="color: white; margin: 0;">Verify Your Email</h1>
-    // <img src="https://www.sakec.ac.in/wp-content/uploads/2024/08/RnD-Cell-logo.jpg" alt="Logo" style="width: 50px; height: 50px;">
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); color: #333;">
     <p>Hello,</p>
@@ -40,7 +39,6 @@ export const PASSWORD_RESET_SUCCESS_TEMPLATE = `
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #333; padding: 20px; display: flex;  justify-content: space-between;">
     <h1 style="color: white; margin: 0;">Password Reset Successful</h1>
-    // <img src="https://www.sakec.ac.in/wp-content/uploads/2024/08/RnD-Cell-logo.jpg" alt="Logo" style="width: 50px; height: 50px;">
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); color: #333;">
     <p>Hello,</p>
@@ -76,7 +74,6 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #333; padding: 20px; display: flex; gap:220px;  justify-content: space-between;">
     <h1 style="color: white; margin: 0;">Password Reset</h1>
-    // <img src="https://www.sakec.ac.in/wp-content/uploads/2024/08/RnD-Cell-logo.jpg" alt="Logo" style="width: 50px; height: 50px;">
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); color: #333;">
     <p>Hello,</p>
@@ -106,7 +103,6 @@ export const WELCOME_EMAIL_TEMPLATE = `
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #333; padding: 20px; display: flex;  justify-content: space-between;">
     <h1 style="color: white; margin: 0;">Welcome to Wedge Shape Simulation!</h1>
-    // <img src="https://www.sakec.ac.in/wp-content/uploads/2024/08/RnD-Cell-logo.jpg" alt="Logo" style="width: 50px; height: 50px;">
   </div>
   <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); color: #333;">
     <p>Hello, <strong>{name}</strong>!</p>
