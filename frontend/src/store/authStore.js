@@ -113,7 +113,7 @@ export const useAuthStore = create((set)=> ({
         try {
             const response = await axios.get(`${API_URL}/student`); // Adjust the endpoint as necessary
             set({ users: response.data.users || [], isLoading: false }); // Ensure it initializes correctly
-            toast.success("Users fetched successfully");
+            // toast.success("Users fetched successfully");
         } catch (error) {
             set({ error: error.response?.data?.message || "Error fetching users", isLoading: false });
             throw error;

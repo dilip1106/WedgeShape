@@ -26,6 +26,9 @@ export default function EmailVerificationPage() {
   const handleResendEmail = async () => {
     // Logic to resend the verification email
     console.log("Resend email clicked");
+    e.preventDefault();
+    await verifyEmail(verificationCode); // Call the verifyEmail method from the store
+    navigate('/');
     // You may want to implement a method in your auth store to handle resending verification emails.
   };
 

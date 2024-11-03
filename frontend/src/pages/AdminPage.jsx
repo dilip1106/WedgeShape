@@ -13,6 +13,7 @@ import Input from "../ui/Input";
 import { useAuthStore } from '../store/authStore'; // Adjust the import path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
+
 export default function AdminPage() {
   const { fetchAllStudents, users = [], user, logout } = useAuthStore(); // Adjust to include current user
   const [sortColumn, setSortColumn] = useState('');
@@ -20,8 +21,15 @@ export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
+
   useEffect(() => {
-    fetchAllStudents(); // Fetch students data on component mount
+    fetchAllStudents();
+    
+    // Set up an interval to fetch data every 5 seconds
+    const intervalId = setInterval(() => {
+      fetchAllStudents();
+    }, 5000);
+    // Fetch students data on component mount
   }, [fetchAllStudents]);
 
   const calculateTotalTime = (loginTime, logoutTime) => {
