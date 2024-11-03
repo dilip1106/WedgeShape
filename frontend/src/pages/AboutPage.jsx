@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/Team.css';
-import deepimg from "../assets/deep.jpg"; // Ensure other images are imported similarly
+import { Link } from 'react-router-dom';
+import deepimg from "../assets/deep.png"; // Ensure other images are imported similarly
 import dilipimg from "../assets/dilip.jpg"; // Ensure other images are imported similarly
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import MentorImg from "../assets/Namrata_Manglani.png"
@@ -9,7 +10,7 @@ const AboutPage = () => {
     {
       name: 'Namrata Manglani',
       role: 'Mentor',
-      description: 'laudantium vel dolorum distinctio dire flow',
+      description: 'Developer skilled in interactive, user-focused web applications.',
       image: MentorImg,
       socials: {
         instagram: '#',
@@ -20,7 +21,7 @@ const AboutPage = () => {
     {
       name: 'Dilipkumar Teli',
       role: 'Developer',
-      description: 'Labore ipsam sit consequatur exercitationem rerum laboriosam laudantium aut quod dolores exercitationem ut',
+      description: 'Passionate developer creating seamless and engaging digital experiences.',
       image: dilipimg,
       socials: {
         instagram: 'https://www.instagram.com/dilip_1124',
@@ -31,7 +32,7 @@ const AboutPage = () => {
     {
       name: 'Deep Adak',
       role: 'Developer',
-      description: 'Illum minima ea autem doloremque ipsum quidem quas aspernatur modi ut praesentium vel tque sed facilis at qui',
+      description: 'Enthusiastic developer dedicated to developing dynamic web experiences.',
       image: deepimg,
       socials: {
         instagram: 'https://www.instagram.com/_deep_5317',
@@ -46,6 +47,7 @@ const AboutPage = () => {
       <div className="container section-title">
         <h2>Our Team</h2>
         <p>Meet the professionals who drive our mission forward</p>
+        <Link to="/" className="home-button">Home</Link>
       </div>
 
       <div className="container team-cards">

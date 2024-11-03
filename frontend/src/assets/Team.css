@@ -27,7 +27,7 @@
 .team-card {
   position: relative;
   width: 280px;
-  height: 360px;
+  height: 400px;
   perspective: 1000px;
 }
 
@@ -136,4 +136,21 @@
 
 .bi-github:hover {
   color: #333; /* GitHub black */
+}
+
+.home-button {
+  display: inline-block;           /* Makes the button an inline-block for spacing */
+  margin: 20px 0;                 /* Adds space above and below the button */
+  padding: 10px 20px;             /* Padding for the button */
+  background-color: black;      /* Button background color */
+  color: white;                    /* Text color */
+  border: none;                    /* Removes border */
+  border-radius: 5px;             /* Rounds the corners */
+  text-decoration: none;           /* Removes underline from links */
+  font-size: 16px;                 /* Font size */
+  transition: background-color 0.3s; /* Transition effect for hover */
+}
+
+.home-button:hover {
+  background-color: #777;      /* Darker background on hover */
 }
