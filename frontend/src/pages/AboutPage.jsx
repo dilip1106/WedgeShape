@@ -10,7 +10,7 @@ const AboutPage = () => {
     {
       name: 'Namrata Manglani',
       role: 'Mentor',
-      description: 'Developer skilled in interactive, user-focused web applications.',
+      description: 'Associate Dean R&D Cell Sakec',
       image: MentorImg,
       socials: {
         instagram: '#',
