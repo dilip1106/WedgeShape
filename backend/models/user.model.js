@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     classroom: {
-      type: String,
+      type: String, // Set FYCM1 as the default value
     },
     prn: {
       type: String,
@@ -33,14 +33,25 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    lastLogout: { // New field for last logout time
+    lastLogout: {
       type: Date,
       default: Date.now,
     },
     role: {
       type: String,
-      enum: ["student", "teacher"], // Define user roles
-      default: "student", // Default role
+      enum: ["student", "teacher"],
+      default: "student",
+    },
+    rollNo: {
+      type: Number,
+    },
+    usageTime: {
+      type: [String],
+      default: [],
+    },
+    expResult: {
+      type: [String],
+      default: [],
     },
     isVerified: {
       type: Boolean,

@@ -15,10 +15,10 @@ export const useAuthStore = create((set)=> ({
 	isCheckingAuth: true,
 	message: null,
 
-	signup: async (email, password, name,  role, classroom, prn,confirmPassword) => {
+	signup: async (email, password, name,  role, classroom, prn,confirmPassword,rollNo) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axios.post(`${API_URL}/signup`, { email, password, name,  role, classroom, prn,confirmPassword });
+			const response = await axios.post(`${API_URL}/signup`, {email, password, name, role, classroom, prn, confirmPassword,rollNo});
 			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
 			toast.success(response.data.message)
 		} catch (error) {
@@ -44,10 +44,10 @@ export const useAuthStore = create((set)=> ({
 		}
 	},
 
-	logout: async (username) => {
+	logout: async () => {
 		set({ isLoading: true, error: null });
 		try {
-			await axios.post(`${API_URL}/logout`,{username});
+			await axios.post(`${API_URL}/logout`);
 			set({ user: null, isAuthenticated: false, error: null, isLoading: false });
 			toast.success("User logout successfully")
 		} catch (error) {
@@ -118,5 +118,15 @@ export const useAuthStore = create((set)=> ({
             set({ error: error.response?.data?.message || "Error fetching users", isLoading: false });
             throw error;
         }
-    }
+    },
+
+	saveTimeToDatabase : async (timeInSeconds,expResult) => {
+		try {
+		  const response = await axios.post(`${API_URL}/savetime`, { time: timeInSeconds, expResult }); // Use Axios to send the time to the server
+		  console.log('Time saved successfully:', response.data);
+		} catch (error) {
+			set({ error: error.response?.data?.message || "Error saving time", isLoading: false });
+            throw error;
+		}
+	}
 }))

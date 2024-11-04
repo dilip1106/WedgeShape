@@ -45,7 +45,7 @@ export default function LoginPage() {
         linkHref="/signup"
         className="w-[350px]"
       >
-        <h2 className="text-xl font-semibold mb-4">Login</h2>
+        <h2 className="text-xl font-semibold mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <Label htmlFor="email">Email</Label>

@@ -11,35 +11,30 @@ import {
 } from "../emails/email.js";
 
 export const signup = async (req, res) => {
-  const { email, password, name, role, classroom, prn, confirmPassword } =
-    req.body;
+  const { email, password, name, role, classroom, prn, confirmPassword,rollNo} = req.body;
 
   try {
     if (!email || !password || !name || !role) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are important" });
+      return res.status(400).json({ success: false, message: "All fields are important" });
     }
 
+    if(classroom === ""){
+      return res.status(400).json({ success: false, message: "Please Select you class" });
+    }
+    
     // Role-based email validation
     if (role === "student") {
       const studentEmailRegex = /^[\w-.]*\d{5}@sakec\.ac\.in$/;
       if (!studentEmailRegex.test(email)) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Invalid Sakec-Student Mail" });
+        return res.status(400).json({ success: false, message: "Invalid Sakec-Student Mail" });
       }
     } else if (role === "teacher") {
       const teacherEmailRegex = /^[^\d@]+@sakec\.ac\.in$/;
       if (!teacherEmailRegex.test(email)) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Invalid Teacher Mail" });
+        return res.status(400).json({ success: false, message: "Invalid Teacher Mail" });
       }
     } else {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid role specified" });
+      return res.status(400).json({ success: false, message: "Invalid role specified" });
     }
 
     if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/.test(password)) {
@@ -51,9 +46,7 @@ export const signup = async (req, res) => {
     }
 
     if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({ success: false, message: `Password doesn't match` });
+      return res.status(400).json({ success: false, message: `Password doesn't match` });
     }
 
     const userAlreadyExist = await User.findOne({ email });
@@ -64,15 +57,14 @@ export const signup = async (req, res) => {
     }
 
     const hashPassword = await bcryptjs.hash(password, 10);
-    const verificationToken = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
     const user = new User({
       email,
       password: hashPassword,
       name,
       role,
+      rollNo,
       prn,
       classroom,
       verificationToken,
@@ -148,25 +140,6 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    const userId = req.userId; // Make sure this is set correctly by your middleware
-
-    if (!userId) {
-      console.log("userid nahi mili");
-      return res.status(400).json({ error: "User ID not provided" });
-    }
-
-    // Find the user by ID and update the lastLogout field
-    const user = await User.findById(userId);
-
-    if (!user) {
-      console.log("user nahi mila");
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Update the lastLogout timestamp
-    user.lastLogout = new Date();
-    await user.save();
-
     // Clear the cookie and send a response
     res.clearCookie("token");
     res.status(200).json({ success: true, message: "Logged out successfully" });
@@ -331,5 +304,42 @@ export const fetchAllUsers = async (req, res) => {
   } catch (error) {
     console.log("Error in fetchAllUsers: ", error);
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const saveTime = async ( req,res)=>{
+  const {time, expResult} = req.body;
+  try {
+
+    const userId = req.userId; // Make sure this is set correctly by your middleware
+
+
+    // Find the user by ID and update the lastLogout field
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the usageTime map with the new time
+    // Assuming you want to store time against a specific key (e.g., "experiment1")
+    // You can change "experiment1" to whatever key you need
+
+    // Append the new time to the array
+    user.usageTime.push(time);
+    // Update the map with the new array
+
+    // Get the existing experimental results array or initialize it if it doesn't exist
+
+    // Append the new result to the array
+    user.expResult.push(expResult);
+
+    // Save the updated user document
+    await user.save();
+
+    return { success: true, message: 'Time and result saved successfully' };
+  } catch (error) {
+    console.error('Error saving time and result:', error);
+    return { success: false, message: error.message };
   }
 };

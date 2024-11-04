@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { toast } from 'react-hot-toast';
 const LeastCountCalculator = ({
   xValue,
   setXValue,
@@ -8,7 +8,17 @@ const LeastCountCalculator = ({
   leastCount,
   setLeastCount,
   calculateLC,
+  timerActive={timerActive},
 }) => {
+
+  const handleButtonClick = () => {
+    if (!timerActive) {
+      toast.error('Timer is not active. Please start the experiment first.');
+    } else {
+      calculateLC();
+    }
+  };
+
   return (
     <div className="card" style={{ marginBottom: '1em' }}>
       <h3 className="card-header bg-primary text-white">Least Count Of Travelling Microscope</h3>
@@ -42,11 +52,11 @@ const LeastCountCalculator = ({
 
           <div style={{ display: 'flex', marginTop: '0.8em' }}>
             <h5 style={{ marginTop: '0.4em', marginRight: '1em' }}>Least Count (LC=x/y)</h5>
-            <input type="button" onClick={calculateLC} value="Calculate LC" />
+            <input type="button" onClick={handleButtonClick} value="Calculate LC" />
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-            <h5>{leastCount !== null ? `LC = ${leastCount.toFixed(3)} cm` : ''}</h5>
+            <h5>{leastCount !== null ? `LC = ${leastCount} cm` : ''}</h5>
           </div>
         </div>
       </div>

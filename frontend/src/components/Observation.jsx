@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // for generating tables in pdf
 import { useAuthStore } from '../store/authStore';
 import Swal from 'sweetalert2'; 
+import toast from 'react-hot-toast';
 const Observation = ({
   toggleLight,
   handlePaperSelect,
@@ -17,7 +18,12 @@ const Observation = ({
   lightOn,
   selectedPaper,
   leastCount,
+  timerActive={timerActive},
+  setTimerActive={setTimerActive},
+  time={time},
+  clearInputs={clearInputs},
 }) => {
+
   const [cal, setCal] = useState(null);
   const [cal1, setCal1] = useState(null);
   const [trValues, setTrValues] = useState(['', '', '', '']);
@@ -27,7 +33,15 @@ const Observation = ({
   const [calculatedThickness, setCalculatedThickness] = useState(null);
 
 
-  const { logout } = useAuthStore();
+  const { saveTimeToDatabase} = useAuthStore();
+
+  const handleButtonClick = (callback) => {
+    if (!timerActive) {
+      toast.error('Timer is not active. Please start the experiment first.');
+    } else {
+      callback();
+    }
+  };
 
   const calculateBeta = () => {
     const newTrValues = [];
@@ -78,16 +92,7 @@ const Observation = ({
 
   // Function to download observation data as PDF
   const downloadDataAsPDF = () => {
-    Swal.fire({
-      title: "Confirm Download",
-      text: "You will be logged out after downloading the file. Do you want to continue?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, download it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
+    
         // Create PDF
         const doc = new jsPDF();
         doc.setFontSize(12);
@@ -114,12 +119,17 @@ const Observation = ({
         // Save the PDF
         doc.save('observation_data.pdf');
 
-        // Call logout function after download
-        logout(); // Call the logout function
-      }
-    });
+        
+       stopTimer();
   };
 
+  const stopTimer = async () => {
+    setTimerActive(false);
+    await saveTimeToDatabase(time,calculatedThickness); // Call the function to save time to the database
+  };
+  
+  
+  
   return (
     <div className="card">
       <h3 className="card-header bg-primary text-white">Observation</h3>
@@ -161,7 +171,7 @@ const Observation = ({
           <h5 style={{ marginLeft: '5px' }}>cm</h5>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+        {/* <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
           <h5>Microscope Position</h5>
           <input
             type="range"
@@ -171,7 +181,7 @@ const Observation = ({
             onChange={(e) => setMicroscopePosition(e.target.value)}
             style={{ marginLeft: '10px', flex: 1 }}
           />
-        </div>
+        </div> */}
 
         <table className="table table-striped" style={{ marginTop: '10px' }}>
           <thead className="thead-dark">
@@ -192,7 +202,8 @@ const Observation = ({
                     const newValues = [...msrValues];
                     newValues[index] = e.target.value;
                     setMsrValues(newValues);
-                  }} placeholder="value" style={{ width: '100%' }} />
+                  }} placeholder="value" style={{ width: '100%' }}
+                  />
                 </td>
                 <td>
                   <input type="text" value={vsdValues[index]} onChange={(e) => {
@@ -208,7 +219,7 @@ const Observation = ({
           </tbody>
         </table>
 
-        <button onClick={calculateBeta} className="button button1" style={{ marginTop: '10px' }}>
+        <button onClick={() => handleButtonClick(calculateBeta)} className="button button1" style={{ marginTop: '10px' }}>
           Calculate β
         </button>
 
@@ -219,7 +230,7 @@ const Observation = ({
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
           <h5>Thickness (t=λL/2β)</h5>
-          <button onClick={calculateThickness} className="button button1" style={{ marginLeft: '10px' }}>
+          <button onClick={() => handleButtonClick(calculateThickness)} className="button button1" style={{ marginLeft: '10px' }}>
             Calculate Thickness
           </button>
           <h5 style={{ marginLeft: '10px' }}>{calculatedThickness !== null ? `t = ${calculatedThickness} cm` : ''}</h5>
