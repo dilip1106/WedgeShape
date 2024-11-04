@@ -31,8 +31,7 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password, name, role, classroom, prn, confirmPassword, rollNo)
-   await signup(email, password, name, role, classroom, prn, confirmPassword, rollNo);
+    await signup(email, password, name, role, classroom, prn, confirmPassword, rollNo);
     navigate("/verify-email");
   };
 

@@ -4,6 +4,7 @@ import 'jspdf-autotable'; // for generating tables in pdf
 import { useAuthStore } from '../store/authStore';
 import Swal from 'sweetalert2'; 
 import toast from 'react-hot-toast';
+import sakecheaderimg from "../assets/image.png"
 const Observation = ({
   toggleLight,
   handlePaperSelect,
@@ -33,7 +34,7 @@ const Observation = ({
   const [calculatedThickness, setCalculatedThickness] = useState(null);
 
 
-  const { saveTimeToDatabase} = useAuthStore();
+  const { saveTimeToDatabase,user} = useAuthStore();
 
   const handleButtonClick = (callback) => {
     if (!timerActive) {
@@ -91,37 +92,103 @@ const Observation = ({
   };
 
   // Function to download observation data as PDF
+  // Function to download observation data as PDF
+
+  const handledownlaod = () =>{
+    if(!timerActive){
+      toast.error("Timer is not active. Please start the experiment first.")
+    }
+    else{
+      downloadDataAsPDF();
+    }
+  }
+
   const downloadDataAsPDF = () => {
-    
-        // Create PDF
-        const doc = new jsPDF();
-        doc.setFontSize(12);
-        doc.text('Observation Data', 14, 10);
+    const doc = new jsPDF();
 
-        // Add Table
-        const tableColumn = ["Fringe No.", "MSR", "VSD", "TR", "β"];
-        const tableRows = msrValues.map((_, index) => [
-          index === 0 ? 'n' : index === 1 ? 'n+5' : index === 2 ? 'n+10' : 'n+15',
-          msrValues[index],
-          vsdValues[index],
-          trValues[index],
-          betaValues[index],
-        ]);
+    // Load the header image (college logo)
+    const imgWidth = 180; // Adjust width as needed
+    const imgHeight = 25; // Adjust height as needed
+    doc.addImage(sakecheaderimg, 'PNG', 15, 10, imgWidth, imgHeight);
 
-        doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    // Experiment Number Centered
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text(`Experiment No. - 5`, doc.internal.pageSize.width / 2, 40, { align: 'center' });
 
-        // Add Calculations
-        doc.text(`Least Count: ${leastCount || 'N/A'}`, 14, doc.lastAutoTable.finalY + 10);
-        doc.text(`Mean5Beta: ${mean5Beta !== null ? mean5Beta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 15);
-        doc.text(`MeanBeta: ${meanBeta !== null ? meanBeta : 'N/A'}`, 14, doc.lastAutoTable.finalY + 20);
-        doc.text(`Calculated Thickness: ${calculatedThickness !== null ? calculatedThickness + ' cm' : 'N/A'}`, 14, doc.lastAutoTable.finalY + 25);
+    // Student Info Table
+    doc.autoTable({
+        head: [['NAME', 'DIVISION', 'ROLL NUMBER']],
+        body: [
+            [user.name || 'N/A', user.classroom || 'N/A', user.rollNo || 'N/A']
+        ],
+        startY: 45,
+        theme: 'grid',
+        styles: { halign: 'center', valign: 'middle' }
+    });
 
-        // Save the PDF
-        doc.save('observation_data.pdf');
+    // Date and Performance Table
+    const downloadTime = new Date().toLocaleString();
+    doc.autoTable({
+        head: [['Date of Performance:', 'Date of Submission:']],
+        body: [[downloadTime, '']],
+        startY: doc.lastAutoTable.finalY + 5,
+        theme: 'grid',
+        styles: { halign: 'center', valign: 'middle' }
+    });
 
-        
-       stopTimer();
-  };
+    // Observation Table Heading
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    const observationTableStartY = doc.lastAutoTable.finalY + 15; // Increased spacing
+    doc.text('Observation Table', 14, observationTableStartY);
+    doc.setDrawColor(0, 0, 0);
+    doc.line(14, observationTableStartY + 2, 60, observationTableStartY + 2);
+
+    // Least Count
+    doc.setFont(undefined, 'normal');
+    doc.text(`Least Count: ${leastCount || 'N/A'} cm`, 14, observationTableStartY + 10);
+
+    // Observation Data Table
+    const tableColumn = ["Fringe No.", "MSR", "VSD", "TR", "β"];
+    const tableRows = msrValues.map((_, index) => [
+        index === 0 ? 'n' : index === 1 ? 'n+5' : index === 2 ? 'n+10' : 'n+15',
+        msrValues[index],
+        vsdValues[index],
+        trValues[index],
+        betaValues[index],
+    ]);
+
+    doc.autoTable({
+        head: [tableColumn],
+        body: tableRows,
+        startY: observationTableStartY + 15,
+        theme: 'grid',
+        styles: { tableLineColor: [0, 0, 0], tableLineWidth: 0.1 }
+    });
+
+    // Calculations Summary
+    const calculationsStartY = doc.lastAutoTable.finalY + 10;
+    doc.text(`Mean5Beta: ${mean5Beta !== null ? mean5Beta : 'N/A'}`, 14, calculationsStartY);
+    doc.text(`MeanBeta: ${meanBeta !== null ? meanBeta : 'N/A'}`, 14, calculationsStartY + 5);
+
+    // Result Heading
+    doc.setFont(undefined, 'bold');
+    const resultStartY = calculationsStartY + 15;
+    doc.text('Result', 14, resultStartY);
+    doc.line(14, resultStartY + 2, 35, resultStartY + 2);
+
+    // Final Result
+    doc.setFont(undefined, 'normal');
+    doc.text(`Thickness of the piece of paper: ${calculatedThickness !== null ? calculatedThickness + ' cm' : 'N/A'}`, 14, resultStartY + 10);
+
+    // Save the PDF
+    doc.save('observation_data.pdf');
+
+    stopTimer();
+};
+
+
 
   const stopTimer = async () => {
     setTimerActive(false);
@@ -236,7 +303,7 @@ const Observation = ({
           <h5 style={{ marginLeft: '10px' }}>{calculatedThickness !== null ? `t = ${calculatedThickness} cm` : ''}</h5>
         </div>
 
-        <button onClick={downloadDataAsPDF} className="button button1" style={{ marginTop: '20px' }}>
+        <button onClick={handledownlaod} className="button button1" style={{ marginTop: '20px' }}>
           Download
         </button>
       </div>
