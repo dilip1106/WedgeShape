@@ -365,6 +365,57 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
           About Us
         </button>
       </div>
+      <div className='grid grid-cols-3 gap-5'>
+
+        {/* <button
+          onClick={() => {
+            window.location.href = '/about'; // Redirects to the About page
+          }}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+          }}
+        >
+          Pretest
+        </button>
+        <button
+          onClick={() => {
+            window.location.href = '/about'; // Redirects to the About page
+          }}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+          }}
+        >
+          Posttest
+        </button> */}
+        <button
+          onClick={() => {
+            window.open('https://forms.gle/NMKT4WM2iqsp2UEPA', '_blank'); // Redirects to the About page
+          }}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+          }}
+        >
+          Feedback
+        </button>
+      </div>
     </div>
 
   );
