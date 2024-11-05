@@ -18,7 +18,7 @@ export const signup = async (req, res) => {
       return res.status(400).json({ success: false, message: "All fields are important" });
     }
 
-    if(classroom === ""){
+    if(classroom === "" && role === "student"){
       return res.status(400).json({ success: false, message: "Please Select you class" });
     }
     

@@ -43,7 +43,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-[550px]  p-6"
+      <Card className="w-[550px] p-6"
         footerText="Already have an account?"
         linkText="Login"
         linkHref="/login"
@@ -64,7 +64,7 @@ export default function SignupPage() {
                 ]}
               />
             </div>
-            <div >
+            <div>
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
@@ -75,75 +75,69 @@ export default function SignupPage() {
                 required
               />
             </div>
-
           </div>
 
-       {/* Two-column layout for Name and Class */}
-            
-            <div >
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
- 
-
-          <div className="grid grid-cols-3 gap-4 mb-4"> {/* Two-column layout for Email, PRN, and Roll No. */}
-
-            <div >
-              <Label htmlFor="rollNo">Roll No.</Label>
-              <Input
-                id="rollNo"
-                type="text"
-                placeholder="Enter your RollNo."
-                value={rollNo}
-                onChange={(e) => setRollNo(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="prn">PRN</Label>
-              <Input
-                id="prn"
-                type="text"
-                placeholder="Enter your PRN"
-                value={prn}
-                onChange={(e) => setPrn(e.target.value)}
-                required
-              />
-            </div>
-
-
-            <div>
-              <Label htmlFor="classroom">Class</Label>
-              <Select
-                id="classroom"
-                value={classroom}
-                onChange={(e) => {
-                  setClassroom(e.target.value);
-              }}
-                options={[
-                  {value: "", label: "Select"},
-                  { value: "FYCM1", label: "FYCM1" },
-                  { value: "FYCM2", label: "FYCM2" },
-                  { value: "FYCM3", label: "FYCM3" },
-                  { value: "FYETC", label: "FYETC" },
-                  { value: "FYAIDS", label: "FYAIDS" },
-                  { value: "FYACT", label: "FYACT" },
-                ]}
-                required
-              />
-            </div>
-
-
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
+
+          {role === "student" && (
+            <>
+              <div className="grid grid-cols-3 gap-4 mb-4">
+                <div>
+                  <Label htmlFor="rollNo">Roll No.</Label>
+                  <Input
+                    id="rollNo"
+                    type="text"
+                    placeholder="Enter your RollNo."
+                    value={rollNo}
+                    onChange={(e) => setRollNo(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="prn">PRN</Label>
+                  <Input
+                    id="prn"
+                    type="text"
+                    placeholder="Enter your PRN"
+                    value={prn}
+                    onChange={(e) => setPrn(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="classroom">Class</Label>
+                  <Select
+                    id="classroom"
+                    value={classroom}
+                    onChange={(e) => setClassroom(e.target.value)}
+                    options={[
+                      { value: "", label: "Select" },
+                      { value: "FYCM1", label: "FYCM1" },
+                      { value: "FYCM2", label: "FYCM2" },
+                      { value: "FYCM3", label: "FYCM3" },
+                      { value: "FYETC", label: "FYETC" },
+                      { value: "FYAIDS", label: "FYAIDS" },
+                      { value: "FYACT", label: "FYACT" },
+                    ]}
+                    required
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="mb-4 relative"> {/* Password Field */}
+            <div className="mb-4 relative">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -166,7 +160,7 @@ export default function SignupPage() {
               </button>
             </div>
 
-            <div className="mb-4 relative"> {/* Confirm Password Field */}
+            <div className="mb-4 relative">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
                 id="confirmPassword"
@@ -189,6 +183,7 @@ export default function SignupPage() {
               </button>
             </div>
           </div>
+
           <Button type="submit" className="w-full mb-4" disabled={isLoading}>
             {isLoading ? <Loader className="animate-spin mx-auto" size={24} /> : "Sign Up"}
           </Button>
