@@ -123,7 +123,10 @@ export default function AdminPage() {
                   <CaretSortIcon className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>Roll No</TableHead>
+              <TableHead><Button variant="ghost" onClick={() => handleSort('rollNo')} className='flex'>
+                  Roll No.
+                  <CaretSortIcon className="ml-2 h-4 w-4" />
+                </Button></TableHead>
               <TableHead>Result</TableHead>
               <TableHead>Verified</TableHead>
             </TableRow>

@@ -6,6 +6,7 @@ import Input from "../ui/Input";
 import Label from "../ui/Label";
 import Card from "../ui/Card";
 import Select from "../ui/Select";
+import TermsModal from "../ui/TermsModal";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -22,7 +23,8 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const { signup, error, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
@@ -31,10 +33,19 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isTermsChecked) {
+      toast.error("Please agree to the Terms and Conditions to proceed.");
+      return;
+    }
     await signup(email, password, name, role, classroom, prn, confirmPassword, rollNo);
     navigate("/verify-email");
   };
 
+  const handleAgreeToTerms = () => {
+    setIsTermsChecked(true);  // Check the checkbox
+    setIsModalOpen(false);  // Close the modal
+  };
+  
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -184,10 +195,37 @@ export default function SignupPage() {
             </div>
           </div>
 
+          {/* Terms and Conditions Checkbox */}
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={isTermsChecked}
+              onChange={(e) => setIsTermsChecked(e.target.checked)}
+              className="mr-2"
+            />
+            <Label htmlFor="terms">
+              I agree to the{" "}
+              <span
+                onClick={() => setIsModalOpen(true)} // Open modal
+                className="text-primary hover:underline cursor-pointer"
+              >
+                Terms and Conditions
+              </span>
+            </Label>
+          </div>
+
           <Button type="submit" className="w-full mb-4" disabled={isLoading}>
             {isLoading ? <Loader className="animate-spin mx-auto" size={24} /> : "Sign Up"}
           </Button>
         </form>
+
+        {/* Terms and Conditions Modal */}
+        <TermsModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          onAgree={handleAgreeToTerms}  // Pass the handleAgreeToTerms function
+        />
       </Card>
     </div>
   );

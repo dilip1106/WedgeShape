@@ -14,7 +14,7 @@ export default function EmailVerificationPage() {
   const handleVerifyCode = async (e) => {
     e.preventDefault();
     await verifyEmail(verificationCode); // Call the verifyEmail method from the store
-    navigate('/'); // Redirect to the home page after successful verification
+    navigate('/procedure'); // Redirect to the home page after successful verification
   };
 
   useEffect(() => {

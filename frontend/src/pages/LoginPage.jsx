@@ -24,7 +24,7 @@ export default function LoginPage() {
     e.preventDefault();
     await login(email, password, role);
     if (role === "student") {
-      navigate("/");
+      navigate("/procedure");
     } else {
       navigate("/admin");
     }
