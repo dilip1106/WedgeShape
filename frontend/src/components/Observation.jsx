@@ -186,6 +186,7 @@ const Observation = ({
     doc.save('observation_data.pdf');
 
     stopTimer();
+    window.open('https://docs.google.com/forms/d/1lwqkYpE4Kcer9w4OlyfM45fQx8KQqZDnE3IKNroRNPU', '_blank');
 };
 
 
@@ -194,6 +195,7 @@ const Observation = ({
     setTimerActive(false);
     await saveTimeToDatabase(time,calculatedThickness); // Call the function to save time to the database
   };
+  
   
   
   
@@ -304,7 +306,7 @@ const Observation = ({
         </div>
 
         <button onClick={handledownlaod} className="button button1" style={{ marginTop: '20px' }}>
-          Download
+          Download & Feedback
         </button>
       </div>
     </div>

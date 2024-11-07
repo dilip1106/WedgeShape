@@ -23,11 +23,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(email, password, role);
-    if (role === "student") {
-      navigate("/procedure");
-    } else {
-      navigate("/admin");
-    }
+    navigate("/procedure");
     // navigate("/")
   };
 

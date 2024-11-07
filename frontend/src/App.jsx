@@ -39,9 +39,9 @@ const AdminRoute = ({ children }) => {
     return <Navigate to='/verify-email' replace />;
   }
 
-  if (user.role !== 'teacher') {
-    return <Navigate to='/' replace />; // Redirect to home if not a teacher
-  }
+  // if (user.role !== 'teacher') {
+  //   return <Navigate to='/' replace />; // Redirect to home if not a teacher
+  // }
 
   return children;
 };
@@ -70,12 +70,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<ProtectedRoute><Experiment /></ProtectedRoute>} />
-          <Route path="/admin" 
+          <Route path="/admin"
             element={
-              <AdminRoute>
+              <ProtectedRoute>
                 <AdminPage />
-              </AdminRoute>
-            } 
+              </ProtectedRoute>
+            }
           />
           <Route path="/signup" element={<RedirectAuthenticatedUser><SignupPage /></RedirectAuthenticatedUser>} />
           <Route path="/login" element={<RedirectAuthenticatedUser><LoginPage /></RedirectAuthenticatedUser>} />

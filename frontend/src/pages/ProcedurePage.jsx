@@ -27,7 +27,8 @@ const ProcedurePage = () => {
             <li>Turn on the lights for the experiment.</li>
             <li>Select the paper to measure from the available options.</li>
             <li>Insert the length of the glass plate into the system.</li>
-            <li>Take the reading accordingly.</li>
+            <li>Note down the reading in the book.</li>
+            <li>Insert the noted value in table.</li>
             <li>Calculate Beta (β) and Thickness (t) using the collected data.</li>
             <li>Finally, download the experiment results.</li>
           </ol>
@@ -37,7 +38,7 @@ const ProcedurePage = () => {
         </div>
         {/* YouTube Video Section */}
         <div className="mb-6">
-          <h3 className="text-xl font-semibold text-black mb-4">Watch the Video</h3>
+          <h3 className="text-xl font-semibold text-black mb-4">How to take a reading using a traveling microscope:</h3>
           <div className="aspect-w-16 aspect-h-9">
             <iframe
               width="100%"

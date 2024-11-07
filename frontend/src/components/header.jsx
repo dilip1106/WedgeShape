@@ -35,7 +35,7 @@ const Header = ({ startExperiment, timer, timerActive = false }) => {
         <div className="flex space-x-4 mb-4 sm:mb-0">
           <button 
             onClick={handleProcedurePage} 
-            className="btn bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md transition duration-200 hover:bg-teal-600">
+            className="btn bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md transition duration-200 hover:bg-blue-600">
             Procedure
           </button>
           <button 

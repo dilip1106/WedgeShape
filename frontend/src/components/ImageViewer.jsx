@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 const images1 = [
   // Add URLs for images in the first array
   "https://user-images.githubusercontent.com/79829365/150636986-075a35cd-0e7e-4cf1-af58-0e8881f48fc1.jpg",
@@ -332,17 +332,41 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
         alt={`Experiment Image ${imageIndex + 1}`}
         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
       />
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-        <h5>Microscope Position</h5>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={microscopePosition}
-          onChange={(e) => setMicroscopePosition(e.target.value)}
-          style={{ marginLeft: '10px', flex: 1 }}
-        />
+    <div style={{ marginTop: '10px' }}>
+      {/* Name */}
+      <h5>Microscope Position</h5>
+
+      {/* Slider with arrows */}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {/* Left arrow button */}
+        <button
+      onClick={() => setMicroscopePosition((prev) => Math.max(prev - 1, 0))}
+      style={{ marginLeft: '10px', cursor: 'pointer', background: 'none', border: 'none' }}
+      aria-label="Decrease microscope position"
+    >
+      <ChevronLeft size={20} />
+    </button>
+
+    {/* Range input */}
+    <input
+      type="range"
+      min="0"
+      max="100"
+      value={microscopePosition}
+      onChange={(e) => setMicroscopePosition(Number(e.target.value))} // Convert to number here
+      style={{ marginLeft: '10px', flex: 1 }}
+    />
+
+    {/* Right arrow button */}
+    <button
+      onClick={() => setMicroscopePosition((prev) => Math.min(prev + 1, 100))}
+      style={{ marginLeft: '10px', cursor: 'pointer', background: 'none', border: 'none' }}
+      aria-label="Increase microscope position"
+    >
+      <ChevronRight size={20} />
+    </button>
       </div>
+    </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
         <h4 style={{ marginRight: '20px', color: 'black' }}>
           Meet The Team
@@ -365,7 +389,7 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
           About Us
         </button>
       </div>
-      <div className='grid grid-cols-3 gap-5'>
+      {/* <div className='grid grid-cols-3 gap-5'>
 
         <button
           onClick={() => {
@@ -415,7 +439,7 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
         >
           Feedback
         </button>
-      </div>
+      </div> */}
     </div>
 
   );
