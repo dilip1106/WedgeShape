@@ -9,10 +9,6 @@ const ProcedurePage = () => {
     navigate("/"); // Navigate to home page
   };
 
-  const handleOpenLink = () => {
-    window.open("https://www.example.com", "_blank"); // Opens the link in a new tab
-  };
-
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-6">
       <div className="bg-white text-black rounded-lg shadow-2xl p-8 max-w-3xl w-full transform transition-all duration-300">
@@ -56,12 +52,14 @@ const ProcedurePage = () => {
         </div>
         {/* Buttons Section */}
         <div className="flex justify-center mt-6 space-x-4">
-          {/* <button
-            onClick={handleOpenLink}
+          <button
+            onClick={() => {
+              window.open('https://forms.gle/jFsqrbAvvdhwPbJNA', '_blank'); // Redirects to the About page
+            }}
             className="py-2 px-6 text-white bg-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition duration-200"
           >
             Pre-Test
-          </button> */}
+          </button>
           <button
             onClick={handleGoHome}
             className="py-2 px-6 text-white bg-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition duration-200"

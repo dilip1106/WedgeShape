@@ -367,9 +367,9 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
       </div>
       <div className='grid grid-cols-3 gap-5'>
 
-        {/* <button
+        <button
           onClick={() => {
-            window.location.href = '/about'; // Redirects to the About page
+            window.open('https://forms.gle/jFsqrbAvvdhwPbJNA', '_blank'); // Redirects to the About page
           }}
           style={{
             padding: '10px 20px',
@@ -384,8 +384,8 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
           Pretest
         </button>
         <button
-          onClick={() => {
-            window.location.href = '/about'; // Redirects to the About page
+           onClick={() => {
+            window.open('https://forms.gle/vGs6gK143HqVqbpX9', '_blank'); // Redirects to the About page
           }}
           style={{
             padding: '10px 20px',
@@ -398,10 +398,10 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
           }}
         >
           Posttest
-        </button> */}
+        </button>
         <button
           onClick={() => {
-            window.open('https://forms.gle/NMKT4WM2iqsp2UEPA', '_blank'); // Redirects to the About page
+            window.open('https://forms.gle/WGYBTj4BfjrGzYzp9', '_blank'); // Redirects to the About page
           }}
           style={{
             padding: '10px 20px',
