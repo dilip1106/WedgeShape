@@ -367,7 +367,7 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
     </button>
       </div>
     </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
         <h4 style={{ marginRight: '20px', color: 'black' }}>
           Meet The Team
         </h4>
@@ -388,7 +388,7 @@ const ImageViewer = ({ selectedPaper, lightOn, microscopePosition, setMicroscope
         >
           About Us
         </button>
-      </div>
+      </div> */}
       {/* <div className='grid grid-cols-3 gap-5'>
 
         <button

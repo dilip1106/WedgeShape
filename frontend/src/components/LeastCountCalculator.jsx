@@ -47,7 +47,7 @@ const LeastCountCalculator = ({
               style={{ marginLeft: '10px', width: '20%', border: '1px solid black', borderRadius: '4px' }}
               className="values"
             />
-            <h5 style={{ marginTop: '0.4em', marginLeft: '4px' }}>cm</h5>
+            <h5 style={{ marginTop: '0.4em', marginLeft: '4px' }}></h5>
           </div>
 
           <div style={{ display: 'flex', marginTop: '0.8em' }}>
