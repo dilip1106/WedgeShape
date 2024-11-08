@@ -53,14 +53,14 @@ const ProcedurePage = () => {
         </div>
         {/* Buttons Section */}
         <div className="flex justify-center mt-6 space-x-4">
-          <button
+          {/* <button
             onClick={() => {
               window.open('https://forms.gle/jFsqrbAvvdhwPbJNA', '_blank'); // Redirects to the About page
             }}
             className="py-2 px-6 text-white bg-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition duration-200"
           >
             Pre-Test
-          </button>
+          </button> */}
           <button
             onClick={handleGoHome}
             className="py-2 px-6 text-white bg-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition duration-200"

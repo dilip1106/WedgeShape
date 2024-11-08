@@ -186,7 +186,7 @@ const Observation = ({
     doc.save('observation_data.pdf');
 
     stopTimer();
-    window.open('https://docs.google.com/forms/d/1lwqkYpE4Kcer9w4OlyfM45fQx8KQqZDnE3IKNroRNPU', '_blank');
+    window.open('https://forms.gle/VgEuDubrJAvRKcu39', '_blank');
 };
 
 
