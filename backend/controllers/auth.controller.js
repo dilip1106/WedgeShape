@@ -21,10 +21,10 @@ export const signup = async (req, res) => {
     if(classroom === "" && role === "student"){
       return res.status(400).json({ success: false, message: "Please Select you class" });
     }
-    
+  
     // Role-based email validation
     if (role === "student") {
-      const studentEmailRegex = /^[\w-.]*\d{5}@sakec\.ac\.in$/;
+      const studentEmailRegex = /[0-9]+@sakec\.ac\.in$/;
       if (!studentEmailRegex.test(email)) {
         return res.status(400).json({ success: false, message: "Invalid Sakec-Student Mail" });
       }
