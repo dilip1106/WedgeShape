@@ -69,6 +69,35 @@ export default function AdminPage() {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
   
+  const downloadCSV = () => {
+    const csvHeaders = ['Class', 'PRN', 'Name', 'Email', 'Roll No.', 'Verified', 'Usage Time', 'Thickness'];
+    const csvRows = users.map((student) => {
+      const usageTime = student.usageTime.map(formatTime).join('; ');
+      const thickness = student.expResult.join('; ');
+
+      return [
+        student.classroom,
+        student.prn,
+        student.name,
+        student.email,
+        student.rollNo,
+        student.isVerified ? 'Yes' : 'No',
+        usageTime,
+        thickness
+      ].join(',');
+    });
+
+    const csvContent = [csvHeaders.join(','), ...csvRows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', 'students.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="flex justify-between items-center mb-4">
@@ -91,9 +120,14 @@ export default function AdminPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="max-w-sm mr-2"
         />
-        <Button variant="primary" onClick={() => navigate('/experiment')}>
-          Experiment
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="primary" onClick={downloadCSV}>
+            Download CSV
+          </Button>
+          <Button variant="primary" onClick={() => navigate('/experiment')}>
+            Experiment
+          </Button>
+        </div>
       </div>
       <div className="rounded-md border overflow-x-auto">
         <Table className="min-w-full">
